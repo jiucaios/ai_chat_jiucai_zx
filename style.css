@@ -45,6 +45,10 @@ body {
 .main-container {
   display: flex;
   height: calc(100vh - 70px);
+  /* 核心：让整个容器水平居中 */
+  justify-content: center;
+  /* 可选：加顶部/底部内边距，避免贴边 */
+  padding: 0 1rem;
 }
 
 .sidebar {
@@ -52,6 +56,10 @@ body {
   background: rgba(30,30,30,0.5);
   backdrop-filter: blur(10px);
   border-right: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  /* 关键：左侧留白只占位置，不影响右侧居中 */
+  margin-right: -260px;
+  visibility: hidden; /* 隐藏左侧留白的视觉显示，只占宽度 */
 }
 
 /* 右侧缩小宽度 */
@@ -61,6 +69,7 @@ body {
   flex-direction: column;
   padding: 2rem;
   gap: 1.2rem;
+  margin: 0 auto; /* 核心：聊天区域本身居中 */
 }
 
 /* 聊天区域（适配黑灰背景） */
@@ -114,6 +123,9 @@ body {
 .input-wrapper {
   position: relative;
   width: 100%;
+  /* 确保输入框容器居中，适配聊天区域宽度 */
+  margin: 0 auto;
+  max-width: 100%; /* 不超出聊天区域宽度 */
 }
 
 .glass-input {
