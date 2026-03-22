@@ -5,21 +5,22 @@
   font-family: "Microsoft Yahei", sans-serif;
 }
 
+/* 核心修改1：黑灰色调背景 */
 body {
-  background: #fff;
-  color: #000;
+  background: linear-gradient(135deg, #121212, #202020, #2c2c2c);
+  color: #fff;
   min-height: 100vh;
 }
 
-/* 导航毛玻璃 */
+/* 导航毛玻璃（适配黑灰背景） */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(255,255,255,0.85);
+  background: rgba(30,30,30,0.85);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -32,8 +33,9 @@ body {
 }
 
 .glass-btn {
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(50,50,50,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   cursor: pointer;
@@ -47,9 +49,9 @@ body {
 
 .sidebar {
   width: 260px;
-  background: rgba(255,255,255,0.5);
+  background: rgba(30,30,30,0.5);
   backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(0,0,0,0.05);
+  border-right: 1px solid rgba(255,255,255,0.05);
 }
 
 /* 右侧缩小宽度 */
@@ -61,12 +63,12 @@ body {
   gap: 1.2rem;
 }
 
-/* 聊天区域 */
+/* 聊天区域（适配黑灰背景） */
 .chat-history {
   flex: 1;
-  background: rgba(255,255,255,0.7);
+  background: rgba(30,30,30,0.7);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   padding: 1.2rem;
   overflow-y: auto;
@@ -75,19 +77,20 @@ body {
   gap: 1rem;
 }
 
-/* 浅灰色气泡 */
+/* 浅灰色气泡（适配黑灰背景） */
 .user-message,
 .ai-message {
   max-width: 80%;
   padding: 0.8rem 1rem;
   border-radius: 14px;
-  background: #f1f1f1;
-  color: #000;
+  background: #333333;
+  color: #fff;
   position: relative;
 }
 
+/* 核心修改2：用户提问区域强制右对齐 */
 .user-message {
-  align-self: flex-end;
+  align-self: flex-end !important;
 }
 
 /* AI 圆形小头像 */
@@ -107,7 +110,7 @@ body {
   background: #6c5ce7;
 }
 
-/* 输入框和聊天框同宽度 */
+/* 输入框和聊天框同宽度（适配黑灰背景） */
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -115,15 +118,18 @@ body {
 
 .glass-input {
   width: 100%;
-  background: rgba(255,255,255,0.7);
+  background: rgba(30,30,30,0.7);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   padding: 1rem;
   font-size: 1rem;
-  color: #000;
+  color: #fff;
   resize: none;
   outline: none;
+}
+.glass-input::placeholder {
+  color: #999;
 }
 
 /* 紫色向上箭头，内嵌在输入框下方 */
@@ -144,16 +150,17 @@ body {
   justify-content: center;
 }
 
-/* 加载中 */
+/* 加载中（适配黑灰背景） */
 .loading {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 0.8rem 1rem 0.8rem 44px;
-  background: #f1f1f1;
+  background: #333333;
   border-radius: 14px;
   position: relative;
   align-self: flex-start;
+  color: #fff;
 }
 .loading::before {
   content: "";
