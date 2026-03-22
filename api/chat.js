@@ -1,4 +1,4 @@
-// 终极稳定版：仅用接入点ID调用（无需传model参数）
+// 最终修复版：同时传接入点ID + 全小写模型名（适配火山所有版本接口）
 const API_TOKEN = process.env.API_TOKEN;
 const ENDPOINT_ID = process.env.ENDPOINT_ID;
 const API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions";
@@ -25,7 +25,8 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${API_TOKEN}`
       },
       body: JSON.stringify({
-        endpoint_id: ENDPOINT_ID, // 仅传接入点ID，无需model参数
+        endpoint_id: ENDPOINT_ID, // 必须传接入点ID
+        model: "doubao-1.5-pro-32k", // 必须传全小写模型名（火山规范）
         messages: [{ role: "user", content: q }],
         stream: false,
         max_tokens: 2048,
