@@ -66,3 +66,11 @@ chatHistory.innerHTML += "<div class='ai-message'>你好呀，我是你的私人
     }
   };
 };
+// 获取按钮元素
+const homeBtn = document.getElementById('homeBtn');
+
+// 添加点击事件
+homeBtn.addEventListener('click', () => {
+ 
+  window.location.href = 'https://jiucaios.github.io/resume/';
+});
