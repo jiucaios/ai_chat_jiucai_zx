@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>智能体育问答系统</title>
-  <!-- 引入外部样式（可选，用于毛玻璃效果兼容） -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
-  <!-- 本地样式 -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,10 +18,10 @@
 
   <!-- 主体内容 -->
   <main class="main-container">
-    <!-- 左侧侧边栏（仅颜色区分，无文本） -->
+    <!-- 左侧留白区域（扩大尺寸） -->
     <aside class="sidebar"></aside>
 
-    <!-- 右侧问答区域 -->
+    <!-- 右侧问答区域（缩小宽度） -->
     <section class="chat-container">
       <!-- 聊天记录展示区 -->
       <div class="chat-history" id="chatHistory"></div>
@@ -35,12 +33,11 @@
           class="glass-input" 
           placeholder="请输入你的体育问题，例如：篮球规则有哪些？"
           rows="4"></textarea>
-        <button id="sendBtn" class="glass-btn send-btn">发送</button>
+        <button id="sendBtn" class="glass-btn send-btn">→</button>
       </div>
     </section>
   </main>
 
-  <!-- 引入JS -->
   <script src="app.js"></script>
 </body>
 </html>
