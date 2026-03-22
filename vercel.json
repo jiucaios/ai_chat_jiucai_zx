@@ -1,10 +1,13 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ],
   "functions": {
     "api/chat.js": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs16.x" // 降级为更兼容的版本
     }
   }
 }
