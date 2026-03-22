@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         endpoint_id: ENDPOINT_ID, // 必须传接入点ID
-        model: "doubao-1.5-pro-32k", // 必须传全小写模型名（火山规范）
+        model: "doubao-1.5-pro", // 修复：替换为存在的公开模型名
         messages: [{ role: "user", content: q }],
         stream: false,
         max_tokens: 2048,
