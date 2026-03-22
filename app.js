@@ -38,7 +38,7 @@ window.onload = function() {
     // 模拟请求
     setTimeout(() => {
       document.getElementById(loadId).remove();
-      var ans = "这是AI的回答：" + text;
+      var ans = text;
       chatHistory.innerHTML += `<div class="ai-message">${ans}</div>`;
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }, 1200);
