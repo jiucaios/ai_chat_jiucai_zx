@@ -5,7 +5,7 @@ window.onload = function() {
   var messageInput = document.getElementById("messageInput");
   var chatHistory = document.getElementById("chatHistory");
 // 页面加载后自动显示AI欢迎语
-chatHistory.innerHTML += "<div class='ai-message'>你好呀，我是新乡工程学院小助手，请问有什么可以帮你？</div>";
+chatHistory.innerHTML += "<div class='ai-message'>你好呀，我是你的私人管家，请问有什么可以帮你？</div>";
   // 2. 强制绑定点击事件（最简单的onclick）
   sendBtn.onclick = function() {
     // 3. 最简单的输入校验
