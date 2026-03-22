@@ -1,4 +1,4 @@
-// 放弃复杂封装，直接用最基础的写法
+// 完全保留你的原始逻辑，仅适配美化样式，不修改任何核心代码
 window.onload = function() {
   // 1. 直接获取元素（不做任何校验，获取不到就报错，不静默）
   var sendBtn = document.getElementById("sendBtn");
@@ -14,14 +14,26 @@ window.onload = function() {
       return;
     }
 
-    // 4. 第一步：先显示用户消息（不管后端咋样，先让你看到反应）
-    chatHistory.innerHTML += "<div style='background: #4299e1; padding: 10px; margin: 5px; border-radius: 8px; text-align: right;'>" + text + "</div>";
+    // 4. 第一步：先显示用户消息（保留你的逻辑，仅替换行内样式为CSS类）
+    chatHistory.innerHTML += "<div class='user-message'>" + text + "</div>";
     messageInput.value = "";
-    sendBtn.innerText = "发送中...";
+    sendBtn.innerText = "↑"; // 保留箭头样式，不改成“发送中”
     sendBtn.disabled = true;
 
-    // 5. 第二步：调用API（本地跑会跨域报错，但按钮已经动了！）
-    // 本地跑时，这步会报错，但不影响「按钮点得动、用户消息显示」
+    // 新增：显示AI正在思考+加载动画（不影响你的核心逻辑）
+    var loadingId = "loading-" + Date.now();
+    chatHistory.innerHTML += `
+      <div id="${loadingId}" class="loading">
+        AI正在思考
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    `;
+    // 自动滚动到底部
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+    // 5. 第二步：完全保留你原始的API调用逻辑，一字不改！
     fetch('/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -29,15 +41,27 @@ window.onload = function() {
     }).then(function(res) {
       return res.json();
     }).then(function(data) {
-      // 显示AI回复
-      chatHistory.innerHTML += "<div style='background: #323250; padding: 10px; margin: 5px; border-radius: 8px;'>" + (data.answer || '没拿到回复') + "</div>";
+      // 移除加载动画，显示AI回复（适配美化样式）
+      document.getElementById(loadingId).remove();
+      chatHistory.innerHTML += "<div class='ai-message'>" + (data.answer || '没拿到回复') + "</div>";
     }).catch(function(err) {
-      // 报错也显示，不静默
-      chatHistory.innerHTML += "<div style='background: #e53e3e; padding: 10px; margin: 5px; border-radius: 8px;'>调用失败：" + err.message + "</div>";
+      // 报错也显示（适配美化样式）
+      document.getElementById(loadingId).remove();
+      chatHistory.innerHTML += "<div class='ai-message' style='background: #e53e3e;'>调用失败：" + err.message + "</div>";
     }).finally(function() {
-      // 恢复按钮
-      sendBtn.innerText = "发送";
+      // 恢复按钮（保留你的逻辑，仅恢复箭头）
+      sendBtn.innerText = "↑";
       sendBtn.disabled = false;
+      // 自动滚动到底部
+      chatHistory.scrollTop = chatHistory.scrollHeight;
     });
+  };
+
+  // 新增：回车发送（可选，不影响你的核心逻辑）
+  messageInput.onkeydown = function(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendBtn.click(); // 触发你原始的点击事件
+    }
   };
 };
