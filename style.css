@@ -163,6 +163,62 @@ body {
   /* 新增：防止按钮文字溢出 */
   white-space: nowrap;
   overflow: hidden;
+  transition: all 0.3s ease; /* 过渡动画 */
+  box-shadow: 0 2px 6px rgba(108, 92, 231, 0.2); /* 初始阴影 */
+}
+.send-btn:hover {
+  transform: scale(1.1); /* 轻微放大 */
+  background: #7b6dff; /* 浅紫色渐变 */
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4); /* 增强阴影 */
+}
+/* 点击按下效果 */
+.send-btn:active {
+  transform: scale(0.95); /* 轻微缩小 */
+  box-shadow: 0 1px 3px rgba(108, 92, 231, 0.2); /* 弱化阴影 */
+}
+
+/* 主页按钮交互动画 */
+.glass-btn {
+  /* 原有样式保留，新增以下 */
+  transition: all 0.2s ease;
+}
+.glass-btn:hover {
+  background: rgba(80,80,80,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.glass-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* ===== 新增：输入框渲染/交互动画 ===== */
+.glass-input {
+  /* 原有样式保留，新增以下 */
+  transition: all 0.3s ease;
+  /* 外发光渲染效果 */
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+/* 聚焦时增强渲染 */
+.glass-input:focus {
+  /* 紫色外发光 */
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+  border-color: rgba(108, 92, 231, 0.4); /* 边框变紫 */
+  transform: translateY(-1px); /* 轻微上移 */
+}
+/* 悬浮时轻微效果 */
+.glass-input:hover {
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.1);
+}
+
+/* ===== 优化：消息气泡hover动画（可选增强） ===== */
+.user-message, .ai-message {
+  transition: all 0.2s ease;
+}
+.user-message:hover, .ai-message:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
 /* 加载中（适配黑灰背景） */
