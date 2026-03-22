@@ -1,9 +1,10 @@
-// 精准适配你授权的 Doubao-1.5-vision-pro 模型
+// 精准适配你新增的 Doubao-1.5-pro-32k 模型（纯文本问答，32k上下文）
 const API_TOKEN = process.env.API_TOKEN;
+// 豆包通用问答接口（固定不变）
 const API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions";
 
 export default async function handler(req, res) {
-  // 跨域配置（必加）
+  // 跨域配置（保证前端正常调用）
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
 
@@ -17,13 +18,13 @@ export default async function handler(req, res) {
   const q = (question || '').trim();
   if (!q) return res.json({ answer: '请输入体育相关问题' });
 
-  // 3. 校验API Token
+  // 3. 校验API Token（仅这一个核心密钥）
   if (!API_TOKEN) {
     return res.json({ answer: '未配置豆包API Token（Vercel环境变量填API_TOKEN）' });
   }
 
   try {
-    // 4. 调用你授权的 Doubao-1.5-vision-pro 模型（核心修改）
+    // 4. 调用 Doubao-1.5-pro-32k 模型（核心适配）
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -31,18 +32,18 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${API_TOKEN}`
       },
       body: JSON.stringify({
-        model: "Doubao-1.5-vision-pro", // 完全匹配你授权的模型名（大小写一致）
-        messages: [{ role: "user", content: q }],
+        model: "Doubao-1.5-pro-32k", // 完全匹配你新增的模型名（大小写一致）
+        messages: [{ role: "user", content: q }], // 纯文本问答用messages参数
         stream: false,
-        // 可选：vision模型可加额外参数，纯文本问答无需配置
-        temperature: 0.7 // 问答流畅度，可保留
+        max_tokens: 2048, // 32k模型可支持更大的输出，默认2048即可
+        temperature: 0.7 // 回答灵活度，0-1之间
       }),
-      timeout: 10000
+      timeout: 15000 // 32k模型响应稍慢，延长超时时间
     });
 
     // 5. 容错解析返回结果
     const text = await response.text();
-    console.log('豆包原始返回：', text); // 调试用
+    console.log('豆包原始返回：', text); // 调试用，可看Vercel日志
 
     let data;
     try {
@@ -51,7 +52,7 @@ export default async function handler(req, res) {
       return res.json({ answer: `豆包返回异常：${text.slice(0, 100)}` });
     }
 
-    // 6. 返回真实AI回复
+    // 6. 返回真实的AI问答回复
     const answer = data.choices?.[0]?.message?.content || 
                    `豆包提示：${data.error?.message || '暂无回答'}`;
     return res.json({ answer });
