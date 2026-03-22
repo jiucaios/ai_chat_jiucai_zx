@@ -6,24 +6,24 @@
   font-family: "Microsoft Yahei", sans-serif;
 }
 
-/* 深色背景渐变 */
+/* 深色渐变背景（核心修改点） */
 body {
   background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
   min-height: 100vh;
-  color: #fff;
+  color: #333333;
   overflow-x: hidden;
 }
 
-/* 导航栏样式 */
+/* 导航栏样式（保留毛玻璃） */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(15, 52, 96, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -32,7 +32,7 @@ body {
 .navbar-left {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #e94560;
+  color: #6c5ce7; /* 紫色主色调 */
 }
 
 /* 毛玻璃按钮基础样式 */
@@ -41,9 +41,9 @@ body {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  color: #333;
   padding: 0.6rem 1.2rem;
-  border-radius: 25px; /* R角 */
+  border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
@@ -52,7 +52,7 @@ body {
 .glass-btn:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .glass-btn:active {
@@ -62,35 +62,36 @@ body {
 /* 主体容器 */
 .main-container {
   display: flex;
-  height: calc(100vh - 70px); /* 减去导航栏高度 */
+  height: calc(100vh - 70px);
 }
 
-/* 左侧侧边栏（仅颜色区分） */
+/* 左侧留白区域（扩大尺寸，原sidebar改为留白） */
 .sidebar {
-  width: 80px;
-  background: rgba(9, 30, 66, 0.5);
+  width: 200px; /* 增大左侧留白 */
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* 右侧聊天区域 */
+/* 右侧聊天区域（缩小宽度） */
 .chat-container {
-  flex: 1;
+  flex: 0 0 800px; /* 固定宽度，缩小右侧区域 */
   display: flex;
   flex-direction: column;
   padding: 2rem;
   gap: 1.5rem;
+  margin: 0 auto; /* 居中显示 */
 }
 
 /* 聊天记录区 */
 .chat-history {
   flex: 1;
-  background: rgba(15, 52, 96, 0.3);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px; /* R角 */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
   padding: 1.5rem;
   overflow-y: auto;
   display: flex;
@@ -98,28 +99,45 @@ body {
   gap: 1rem;
 }
 
-/* 聊天消息样式（用户/AI区分） */
+/* 聊天消息样式 - 浅灰气泡+黑色字体 */
 .user-message, .ai-message {
   max-width: 80%;
   padding: 1rem;
   border-radius: 15px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  color: #000; /* 黑色字体 */
+  position: relative;
 }
 
 .user-message {
   align-self: flex-end;
-  background: rgba(233, 69, 96, 0.4);
-  border: 1px solid rgba(233, 69, 96, 0.5);
+  background: #e9ecef; /* 浅灰色气泡 */
+  border: 1px solid #dee2e6;
 }
 
+/* AI消息 - 带圆形头像 */
 .ai-message {
   align-self: flex-start;
-  background: rgba(0, 122, 255, 0.4);
-  border: 1px solid rgba(0, 122, 255, 0.5);
+  background: #e9ecef; /* 浅灰色气泡 */
+  border: 1px solid #dee2e6;
+  padding-left: 50px; /* 预留头像位置 */
 }
 
-/* 输入框样式 */
+/* AI圆形头像 */
+.ai-message::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #6c5ce7 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>') center/60% no-repeat;
+}
+
+/* 输入框样式 - 黑色字体 */
 .input-container {
   display: flex;
   gap: 1rem;
@@ -128,32 +146,83 @@ body {
 
 .glass-input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #000; /* 黑色输入字体 */
   padding: 1rem;
-  border-radius: 15px; /* R角 */
+  border-radius: 15px;
   resize: none;
   font-size: 1rem;
   outline: none;
 }
 
 .glass-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: #666; /* 占位符灰色 */
 }
 
-/* 发送按钮特殊样式 */
+/* 发送按钮 - 紫色箭头 */
 .send-btn {
-  background: linear-gradient(135deg, #e94560, #d63353);
-  padding: 1rem 2rem;
-  border-radius: 15px; /* R角 */
+  background: linear-gradient(135deg, #6c5ce7, #8a7eff);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
   font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 .send-btn:hover {
-  background: linear-gradient(135deg, #d63353, #b92540);
+  background: linear-gradient(135deg, #5a4bda, #7b6dff);
+}
+
+/* 加载动画样式 */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  align-self: flex-start;
+  background: #e9ecef;
+  border-radius: 15px;
+  padding-left: 50px;
+  position: relative;
+}
+
+/* AI头像+加载动画 */
+.loading::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #6c5ce7 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>') center/60% no-repeat;
+}
+
+/* 加载小圆动画 */
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6c5ce7;
+  animation: bounce 1s infinite alternate;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-5px); }
 }
 
 /* 滚动条美化 */
@@ -162,23 +231,28 @@ body {
 }
 
 .chat-history::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
 
 .chat-history::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }
 
 .chat-history::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
   .sidebar {
-    width: 40px;
+    width: 80px;
+  }
+
+  .chat-container {
+    flex: 1;
+    padding: 1rem;
   }
 
   .input-container {
