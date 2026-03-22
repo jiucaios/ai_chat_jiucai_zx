@@ -1,12 +1,15 @@
 {
+  // 核心：优先加载静态文件（app.js/style.css），再兜底到index.html（解决前端路由）
   "routes": [
-    { "src": "/[^.]+", "dest": "/", "status": 200 }
+    { "src": "/(.*\\.js|.*\\.css)", "dest": "/$1" }, // 确保JS/CSS文件能正常加载
+    { "src": "/(.*)", "dest": "/index.html" }       // 所有其他请求指向index.html
   ],
+  // 临时关闭缓存（调试阶段避免缓存旧代码）
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
     }
   ]
