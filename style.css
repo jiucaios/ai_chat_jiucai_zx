@@ -160,6 +160,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* 新增：防止按钮文字溢出 */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /* 加载中（适配黑灰背景） */
