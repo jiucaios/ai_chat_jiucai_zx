@@ -1,0 +1,192 @@
+/* 全局样式重置+基础配置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Microsoft Yahei", sans-serif;
+}
+
+/* 深色背景渐变 */
+body {
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  min-height: 100vh;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* 导航栏样式 */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(15, 52, 96, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-left {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e94560;
+}
+
+/* 毛玻璃按钮基础样式 */
+.glass-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px; /* R角 */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.glass-btn:active {
+  transform: translateY(0);
+}
+
+/* 主体容器 */
+.main-container {
+  display: flex;
+  height: calc(100vh - 70px); /* 减去导航栏高度 */
+}
+
+/* 左侧侧边栏（仅颜色区分） */
+.sidebar {
+  width: 80px;
+  background: rgba(9, 30, 66, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 右侧聊天区域 */
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+/* 聊天记录区 */
+.chat-history {
+  flex: 1;
+  background: rgba(15, 52, 96, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px; /* R角 */
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 聊天消息样式（用户/AI区分） */
+.user-message, .ai-message {
+  max-width: 80%;
+  padding: 1rem;
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.user-message {
+  align-self: flex-end;
+  background: rgba(233, 69, 96, 0.4);
+  border: 1px solid rgba(233, 69, 96, 0.5);
+}
+
+.ai-message {
+  align-self: flex-start;
+  background: rgba(0, 122, 255, 0.4);
+  border: 1px solid rgba(0, 122, 255, 0.5);
+}
+
+/* 输入框样式 */
+.input-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.glass-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 1rem;
+  border-radius: 15px; /* R角 */
+  resize: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 发送按钮特殊样式 */
+.send-btn {
+  background: linear-gradient(135deg, #e94560, #d63353);
+  padding: 1rem 2rem;
+  border-radius: 15px; /* R角 */
+  font-weight: 600;
+}
+
+.send-btn:hover {
+  background: linear-gradient(135deg, #d63353, #b92540);
+}
+
+/* 滚动条美化 */
+.chat-history::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-history::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.chat-history::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 40px;
+  }
+
+  .input-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .send-btn {
+    width: 100%;
+  }
+}
