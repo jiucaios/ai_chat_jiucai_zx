@@ -1,47 +1,48 @@
-
+// 精准适配你授权的 Doubao-1.5-vision-pro 模型
 const API_TOKEN = process.env.API_TOKEN;
-// 你本地验证过的豆包固定接口地址
 const API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions";
 
 export default async function handler(req, res) {
-  // 跨域配置（必加，保证前端能调用）
+  // 跨域配置（必加）
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
 
-  // 1. 只处理POST请求
+  // 1. 仅处理POST请求
   if (req.method !== 'POST') {
     return res.json({ answer: '仅支持POST请求，比如问「篮球一节多少分钟」' });
   }
 
-  // 2. 获取并校验前端传入的问题
+  // 2. 校验前端传入的问题
   const { question } = req.body || {};
   const q = (question || '').trim();
   if (!q) return res.json({ answer: '请输入体育相关问题' });
 
-  // 3. 校验Token（仅这1个密钥，无其他）
+  // 3. 校验API Token
   if (!API_TOKEN) {
     return res.json({ answer: '未配置豆包API Token（Vercel环境变量填API_TOKEN）' });
   }
 
   try {
-    // 4. 调用豆包接口（仅核心参数，删除endpoint_id）
+    // 4. 调用你授权的 Doubao-1.5-vision-pro 模型（核心修改）
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_TOKEN}` // 仅用Token认证，和你本地一致
+        'Authorization': `Bearer ${API_TOKEN}`
       },
       body: JSON.stringify({
-        model: "doubao-pro", // 若你是lite版，改成doubao-lite即可
+        model: "Doubao-1.5-vision-pro", // 完全匹配你授权的模型名（大小写一致）
         messages: [{ role: "user", content: q }],
-        stream: false
+        stream: false,
+        // 可选：vision模型可加额外参数，纯文本问答无需配置
+        temperature: 0.7 // 问答流畅度，可保留
       }),
       timeout: 10000
     });
 
     // 5. 容错解析返回结果
     const text = await response.text();
-    console.log('豆包原始返回：', text); // 调试用，可看Vercel日志
+    console.log('豆包原始返回：', text); // 调试用
 
     let data;
     try {
