@@ -1,4 +1,4 @@
-// 最终修复版：同时传接入点ID + 全小写模型名（适配火山所有版本接口）
+// 最终修复版：适配绑定特定版本模型的接入点（仅传接入点ID，模型名兼容填写）
 const API_TOKEN = process.env.API_TOKEN;
 const ENDPOINT_ID = process.env.ENDPOINT_ID;
 const API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions";
@@ -25,8 +25,8 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${API_TOKEN}`
       },
       body: JSON.stringify({
-        endpoint_id: ENDPOINT_ID, // 必须传接入点ID
-        model: "doubao-1.5-pro", // 修复：替换为存在的公开模型名
+        endpoint_id: ENDPOINT_ID, // 核心：接入点ID必须正确（绑定了250115版本）
+        model: "doubao-1.5-pro",  // 模型名填基础名即可，接入点会自动匹配绑定的32k 250115版本
         messages: [{ role: "user", content: q }],
         stream: false,
         max_tokens: 2048,
